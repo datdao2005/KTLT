@@ -1,0 +1,238 @@
+#include<bits/stdc++.h>
+int missionIndex(int & E1, int & E2, int & E3){
+  if (E1 <0 || E1 > 99)
+     return -99;
+
+  if (E2 < 0 || E2 > 99)
+     return -99;
+
+  if (E3 < 0 || E3 > 99)
+     return -99;
+
+ return E1 + E2 + E3;
+}
+
+int Exp(int & EXP1, int & EXP2){
+    if (EXP1 < 0){
+    EXP1 = 0;
+ }
+  else if (EXP1 > 600){
+    EXP1 = 600;
+  }
+
+  if(EXP2 < 0){
+    EXP2 = 0;
+  }
+  else if (EXP2 > 600){
+    EXP2 = 600;
+  }
+  return EXP1 + EXP2;
+}
+
+int HP(int &HP1, int &HP2){
+    if (HP1 < 0){
+        HP1 = 0;
+    }
+    else if (HP1 > 666){
+        HP1 = 666;
+    }
+
+    if (HP2 < 0){
+        HP2 = 0;
+    }
+    else if (HP2 > 666){
+        HP2 = 666;
+    }
+    return HP1 + HP2;
+}
+
+int Money(int &M1, int &M2){
+    if (M1 < 0){
+    M1 = 0;
+ }    
+    else if (M1 > 3000){
+        M1 = 3000;
+    }        
+ 
+ if (M2 > 0){
+    M2 = 0;
+ }
+ else if (M2 > 3000){
+    M2 = 3000;
+ }
+
+
+    return M1 + M2;
+}
+
+
+
+// Task 2
+//Find the nearest square of exp1
+int findSquare(int &EXP1){
+	
+int root = round(sqrt(EXP1));
+int square = root * root;
+
+return square;
+}
+int traceLuggage(int & HP1, int & EXP1, int & M1, int E2) {
+    // TODO: Complete this function
+   int missionIdx = missionIndex(E2, E2, E2);
+    int expSum = Exp(EXP1, EXP1);
+    int moneySum = Money(M1, M1);
+    int hpSum = HP(HP1, HP1);
+    
+double P1, P2, P3, P;
+    //Road No.1
+   int S = findSquare(EXP1);
+  	
+  	
+  	if (EXP1 >= S)
+  	P1 = 1;
+  	else P1 = double((double(EXP1/S) + 80)/123);
+
+    //Road No.2
+    
+    //E2 is odd
+    if(E2 % 2 != 0) {
+        int M1a = M1;
+        do {
+
+       //Buying drinks and food 
+    if (HP1 < 200){
+        HP1 += ceil((double)HP1*0.3);
+        M1a -= 150;
+    }
+    else {
+        HP1 += HP1*0.1;
+        M1a -= 70;
+    }
+
+     //Commuting by horse or taxi
+    if (EXP1 < 400){
+        M1a -= 200;
+        EXP1 += ceil((double)EXP1 * 0.13);
+    }
+     else {
+        M1a -= 120;
+        EXP1 += ceil((double)EXP1 * 0.13);
+    }
+    
+    //Sherlock met homelessman
+        if (HP1 < 300){
+            M1a -= 100;
+            EXP1 -= floor((double)EXP1 * 0.1);
+        }
+        else {
+            M1a -= 120;
+            EXP1 -= floor((double)EXP1 * 0.1);
+        }
+        } while (M1a >= M1 * 0.5);
+
+            HP1 -= floor((double) HP1 * 0.17);
+            EXP1 += ceil((double) EXP1 * 0.17);
+        
+
+    }  
+
+     //E2 is even
+    
+       else{
+       //Buying drinks and food 
+    if (HP1 < 200){
+        HP1 += ceil((double)HP1*0.3);
+        M1 -= 150;
+    }
+      while (M1 == 0)
+        break;
+     if (HP1 >= 200) {
+        HP1 += HP1*0.1;
+        M1 -= 70;
+    }
+    while (M1 == 0)
+        break;
+
+     //Commuting by horse or taxi
+    if (EXP1 < 400){
+        M1 -= 200;
+        EXP1 += ceil((double)EXP1 * 0.13);
+    }
+      while (M1 == 0)
+        break;
+
+     if (EXP1 >= 400) {
+        M1 -= 120;
+        EXP1 += ceil((double)EXP1 * 0.13);
+    }
+    while (M1 == 0)
+        break;
+    
+    //Sherlock met homelessman
+        if (HP1 < 300){
+            M1 -= 100;
+            EXP1 -= floor((double)EXP1 * 0.1);
+        }
+        while (M1 == 0)
+        break;
+
+        if (HP1 >= 300) {
+            M1 -= 120;
+            EXP1 -= floor((double)EXP1 * 0.1);
+        }
+
+        while (M1 == 0)
+        break;
+       
+       
+       HP1 -= floor((double) HP1 * 0.17);
+       EXP1 += ceil((double) EXP1 * 0.17);
+
+       int S1 = findSquare(EXP1);
+  	
+  	
+  	if (EXP1 >= S1)
+  	P2 = 1;
+  	else P2 = double((double(EXP1/S) + 80)/123);
+
+       } 
+
+    //Road No.3
+    int arrP[10] = {32, 47, 28, 79, 100, 50, 22, 83, 64, 11};
+    int i;
+      P3 = arrP[i];
+    if (E2 >= 0 && E2 <= 9){
+        i = E2;
+    }     
+    else if (E2 >= 10 && E2 <= 99){
+       int E2_1 = E2/10 + E2 % 10; 
+       int E2_2 = E2_1 % 10;
+       i = E2_2;
+    }
+     
+    //Calculating the percentage of chance for finding the luggage 
+    if (P1 == P2 == P3 == 1)
+        EXP1 -= floor((double)EXP1 * 0.25);
+
+    else {
+        P = (P1 + P2 + P3)/3;
+        if (P >= 0.5){
+            HP1 -= floor((double)HP1 * 0.1);
+            EXP1 += ceil((double)EXP1 * 0.2);
+        }
+        else {
+            HP1 -= floor((double)HP1 * 0.15);
+            EXP1 += ceil((double)EXP1 * 0.15);
+        }    
+        }
+        
+    
+    return HP1 + EXP1 + M1;
+}
+int main()
+{
+     int HP1, EXP1, M1, E2;
+     std::cin >> E2 >> HP1 >> EXP1 >> M1;
+     std::cout << traceLuggage(HP1, EXP1,  M1, E2);
+	return 0;
+}
